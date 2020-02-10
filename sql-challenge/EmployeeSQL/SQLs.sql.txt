@@ -1,0 +1,88 @@
+// 1. List employee number, last name, first name, gender, and salary.
+
+Select A.emp_no, A.last_name, A. first_name, A.gender, B.salary 
+from employees A join salaries B 
+on A.emp_no = B.emp_no
+
+// 2. List employees who were hired in 1986.
+
+Select * from employees where hire_date between '1986-01-01' and '1986-12-31'
+
+// 3. List the manager of each department with the following information: department number, department name, the manager's employee number, last name, first name, and start and end employment dates.
+
+Select A.dept_no, B.dept_name, A.emp_no, C.last_name, C.first_name, A.from_date, A.to_date 
+From dept_manager A, departments B, employees C
+Where A.dept_no = B.dept_no and
+   	A.emp_no = C.emp_no
+
+OR (both produce same result) 
+
+Select A.dept_no, B.dept_name, A.emp_no, C.last_name, C.first_name, A.from_date, A.to_date 
+From dept_manager A join departments B on A.dept_no = B.dept_no
+Join employees C on A.emp_no = C.emp_no
+
+
+// 4. List the department of each employee with the following information: employee number, last name, first name, and department name.
+
+Select A.emp_no, A.last_name, A.first_name, C.dept_name
+From employees A, dept_emp B, departments C
+Where A.emp_no = B.emp_no and 	
+	B.dept_no = C.dept_no
+
+OR (both produce same result) 
+
+Select A.emp_no, A.last_name, A.first_name, C.dept_name
+From employees A join dept_emp B on A.emp_no = B.emp_no
+join departments C on B.dept_no = C.dept_no
+
+// 5. List all employees whose first name is "Hercules" and last names begin with "B."
+
+Select * from employees 
+Where first_name = 'Hercules' and last_name like 'B%'
+
+// 6. List all employees in the Sales department, including their employee number, last name, first name, and department name.
+
+Select A.emp_no, A.last_name, A.first_name, C.dept_name
+From employees A, dept_emp B, departments C
+Where A.emp_no = B.emp_no and 	
+	B.dept_no = C.dept_no and 
+	C.dept_name = 'Sales'
+
+OR (both produce same result) 
+
+Select A.emp_no, A.last_name, A.first_name, C.dept_name
+From employees A join dept_emp B on A.emp_no = B.emp_no 
+join departments C on B.dept_no = C.dept_no 
+and C.dept_name = 'Sales'	
+
+
+// 7. List all employees in the Sales and Development departments, including their employee number, last name, first name, and department name.
+
+Select A.emp_no, A.last_name, A.first_name, C.dept_name
+From employees A, dept_emp B, departments C
+Where A.emp_no = B.emp_no and 	
+	B.dept_no = C.dept_no and 
+	(C.dept_name = 'Sales' or C.dept_name ='Development')
+
+OR 
+
+Select A.emp_no, A.last_name, A.first_name, C.dept_name
+From employees A join dept_emp B on A.emp_no = B.emp_no join departments C
+	on B.dept_no = C.dept_no where 
+	(C.dept_name = 'Sales' or C.dept_name ='Development')
+
+// 8. In descending order, list the frequency count of employee last names, i.e., how many employees share each last name.
+
+Select last_name,  count(*)
+From employees
+Group by last_name order by count(*) desc
+
+Interesting observation: 
+There are two employees with two records in Titles table with the same title (different date ranges though).
+select emp_no, title, count(*) from titles
+group by emp_no, title
+having count(*)>1;
+
+select * from titles
+where emp_no = 110386 or emp_no = 110765;
+
