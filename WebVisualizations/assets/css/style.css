@@ -73,57 +73,23 @@ footer{
   margin-top: 15px; 
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* ----DESCRIPTION START---- */
+/* Content area */
 .content-header {
-  /* Positioning */
   margin-bottom: 33px;
-  font-family: Georgia, Times, "Times New Roman", serif;
-
-  /* Typography */
-  font-size: 32px;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif, Times, "Times New Roman", serif;
+  font-size: 28px;
   font-weight: bold;
   color: #4aaaa5;
 }
 
 .content-content {
-  /* Box-model */
   padding: 30px;
-
-  /* Positioning */
-  margin-top: 32px;
-
-  /* Visual */
+  margin-top: 26px;
   background-color: #fff;
 }
 
 .content-content > p {
-  /* Box-model */
   padding-top: 20px;
-
-  /* Typography */
   font-size: 16px;
   line-height: 30px;
   color: slategray;
@@ -134,10 +100,7 @@ footer{
 }
 
 #content-image {
-  /* Positioning */
   float: left;
-
-  /* Box-model */
   width: 200px;
   height: 200px;
   margin-top: 20px;
@@ -146,39 +109,23 @@ footer{
 
 /* Description content media query */
 @media only screen and (max-width: 767px) {
-  /* override default class styling for positioning/padding */
-
   .content-content {
-    /* Box-model */
     padding: 0;
-
-    /* Positioning */
     margin-top: 0;
   }
 }
 
-/* ----DESCRIPTION END---- */
-
-/* ----IMAGE NAV START---- */
+/* Image nav */
 #imageNav-area {
   width: 100%;
-
-  /* Box-model */
   padding: 30px 30px 43px;
-
-  /* Positioning */
   margin-top: 32px;
-
-  /* Visual */
   background-color: #fff;
 }
 
 .imageNav-header {
-  /* Positioning */
   margin-bottom: 15px;
   font-family: Georgia, Times, "Times New Roman", serif;
-
-  /* Typography */
   font-size: 25px;
   font-weight: bold;
   color: #4aaaa5;
@@ -187,39 +134,40 @@ footer{
 
 .imageNav-photo {
   width: 140px;
-
-  /* Box-model */
   height: 140px;
 }
 
 .imageNav-photo:hover {
-  /* Visuals */
   opacity: 0.6;
 }
 
 .imageNav-photo.active {
-  /* Visuals */
   border: 2px solid #4aaaa5;
 }
 
 #images {
-  /* Box-model */
   padding-top: 15px;
-
-  /* Typography */
   text-align: center;
 }
 
 #images1, #images2 {
-  /* Box-model */
   padding-top: 15px;
-  /* Typography */
   text-align: center;
 }
 
 #images1 img, #images2 img{
   height: 400px;
   width: 400px;
+}
+
+.datatable {
+
+  margin-bottom: 15px;
+  font-family: Georgia, Times, "Times New Roman", serif;
+  font-size: 15px;
+  color: #203534;
+  text-align: center;
+  align-self: center;
 }
 
 /* ----IMAGE NAV END---- */
