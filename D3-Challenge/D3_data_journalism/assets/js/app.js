@@ -31,7 +31,7 @@ function xScale(censusdata, chosenXAxis) {
   // create scales
   var xLinearScale = d3.scaleLinear()
     .domain([d3.min(censusdata, d => d[chosenXAxis]) * 0.9,
-      d3.max(censusdata, d => d[chosenXAxis]) * 1.1
+    d3.max(censusdata, d => d[chosenXAxis]) * 1.1
     ])
     .range([0, width]);
 
@@ -47,7 +47,7 @@ function yScale(censusdata, chosenYAxis) {
   // create scales
   var yLinearScale = d3.scaleLinear()
     .domain([d3.min(censusdata, d => d[chosenYAxis]) * 0.7,
-      d3.max(censusdata, d => d[chosenYAxis]) * 1.1
+    d3.max(censusdata, d => d[chosenYAxis]) * 1.1
     ])
     .range([height, 0]);
 
@@ -93,21 +93,21 @@ function renderCircles(circlesGroup, newXScale, chosenXaxis) {
 function updateToolTip(chosenXAxis, chosenYAxis, circlesGroup) {
   var labelX = "Poverty (%):";
   var labelY = "Lacks Healthcare (%):";
-  
+
   var toolTip = d3.tip()
     .attr("class", "d3-tip")
     .offset([80, -60])
-    .html(function(d) {
+    .html(function (d) {
       return (`${d.state}<br>${labelX} ${d[chosenXAxis]}<br>${labelY} ${d[chosenYAxis]}`);
     });
 
   circlesGroup.call(toolTip);
 
-  circlesGroup.on("mouseover", function(data) {
+  circlesGroup.on("mouseover", function (data) {
     toolTip.show(data);
   })
     // onmouseout event
-    .on("mouseout", function(data, index) {
+    .on("mouseout", function (data, index) {
       toolTip.hide(data);
     });
 
@@ -115,11 +115,11 @@ function updateToolTip(chosenXAxis, chosenYAxis, circlesGroup) {
 }
 
 // Retrieve data from the CSV file and execute everything below
-d3.csv("assets/data/censusdata.csv").then(function(censusdata, err) {
+d3.csv("assets/data/censusdata.csv").then(function (censusdata, err) {
   if (err) throw err;
 
   // parse data
-  censusdata.forEach(function(data) {
+  censusdata.forEach(function (data) {
     data.poverty = +data.poverty;
     data.healthcare = +data.healthcare;
   });
@@ -146,15 +146,26 @@ d3.csv("assets/data/censusdata.csv").then(function(censusdata, err) {
 
   // append initial circles
   var circlesGroup = chartGroup.selectAll("circle")
-    .data(censusdata)
-    .enter()
-    .append("circle")
-    .attr("cx", d => xLinearScale(d[chosenXAxis]))
-    .attr("cy", d => yLinearScale(d[chosenYAxis]))
-    .attr("r", 10)
-    .attr("fill", "blue")
-    .attr("opacity", ".5");
+    .data(censusdata).enter();
 
+  var cg1 =
+    circlesGroup
+      .append("circle")
+      .attr("cx", d => xLinearScale(d[chosenXAxis]))
+      .attr("cy", d => yLinearScale(d[chosenYAxis]))
+      .attr("r", 10)
+      .attr("fill", "yellow")
+      .attr("opacity", ".5");
+  updateToolTip(chosenXAxis, chosenYAxis, cg1);
+
+  cg1 =
+    circlesGroup.append("text")
+      .attr("dx", function (d) { return xLinearScale(d[chosenXAxis]) - 5 })
+      .attr("dy", function (d) { return yLinearScale(d[chosenYAxis]) + 5 })
+      .text(function (d) { return d.abbr })
+
+  updateToolTip(chosenXAxis, chosenYAxis, cg1);
+  
   // Create group for  2 x- axis labels
   var labelsGroup = chartGroup.append("g")
     .attr("transform", `translate(${width / 2}, ${height + 20})`);
@@ -169,19 +180,19 @@ d3.csv("assets/data/censusdata.csv").then(function(censusdata, err) {
   // append y axis
   chartGroup.append("text")
     .attr("transform", "rotate(-90)")
-    .attr("y", 0 - margin.left/2)
-    .attr("x", 0 - (height /2))
+    .attr("y", 0 - margin.left / 2)
+    .attr("x", 0 - (height / 2))
     .attr("dy", "1em")
     .classed("active", true)
     .classed("axis-text", true)
     .text("Lacks Healthcare(%)");
 
-  // updateToolTip function above csv import
-  circlesGroup = updateToolTip(chosenXAxis, chosenYAxis, circlesGroup);
+  // updateToolTip function 
+
 
   // x axis labels event listener
   labelsGroup.selectAll("text")
-    .on("click", function() {
+    .on("click", function () {
       // get value of selection
       var value = d3.select(this).attr("value");
       if (value !== chosenXAxis) {
@@ -212,6 +223,6 @@ d3.csv("assets/data/censusdata.csv").then(function(censusdata, err) {
         }
       }
     });
-}).catch(function(error) {
+}).catch(function (error) {
   console.log(error);
 });
